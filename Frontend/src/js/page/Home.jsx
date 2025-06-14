@@ -19,6 +19,7 @@ export default function Home() {
   }
 
   const handleClick = async() => {
+    setRespose(undefined)
 
     if(!formData.email || !formData.url) {
       setRespose({success: false, message: 'please fill in all required inputs'});
@@ -30,11 +31,20 @@ export default function Home() {
       const response = await fetch('https://yhxzjyykdsfkdrmdxgho.supabase.co/functions/v1/junior-dev' + '?url=' + formData.url + '&email=' + formData.email)
       
       if(response.ok) {
-        const responseObjStr = await response.json();
-        const responseObj = JSON.parse(responseObjStr);
-        setRespose({success: true, data: responseObj})
+        console.log(response.headers);
+        const responseObj = await response.json();
+        const responseObjStr = JSON.stringify(responseObj);
+
+        setRespose({
+          success: true, 
+          message: "Success!", 
+          data: responseObjStr
+        })
       } else {
-        setRespose({success: false, message: "status code: " + response.status})
+        setRespose({
+          success: false, 
+          message: "Request Not Okay, Status Code " + response.status
+        })
       }
     } catch (error) {
       console.log(error)
@@ -48,11 +58,11 @@ export default function Home() {
     <header>
       <div className="preview">
           <h3>Test Api Endpoint</h3>
-          <p>{isLoading && 'Loading...'}{response?.success ? 'Response: ' + response?.data?.message : response ? 'Request Failed. Reaon: ' + response?.message : 'Provide Required Details to Test Your Endpoint'}</p>
+          <p>{`${isLoading ? 'Loading... ' : ''}${response ? 'Response: ' + response?.message : !isLoading ? 'Input Required Details And Test Your Endpoint' : ''}`}</p>
           {
             response?.data ? 
             <>
-            <p>Raw Json Response</p>
+            <p>Raw Json Response:</p>
             <code>
               {response.data}
             </code>
