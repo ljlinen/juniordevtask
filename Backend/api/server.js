@@ -1,9 +1,7 @@
 /* An endpoint orders a string's characters alphabetically */
 // I would use express for this but since it was not mentioned whether it's allowed or not, I'll stick to vanilla
-const http = require('http');
 
-
-const server = http.createServer((req, res) => {
+export default function handler(req, res) {
 
   if(req.method === 'POST' && req.url === '/webhook') {
     let chunks = [];
@@ -29,9 +27,4 @@ const server = http.createServer((req, res) => {
   } else {
     res.end('Not Found');
   }
-})
-
-
-server.listen(3000, () => {
-  console.log('Server Running On Port 3000')
-});
+}
