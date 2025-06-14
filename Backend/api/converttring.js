@@ -3,12 +3,13 @@
 
 export default function handler(req, res) {
 
-  if(req.method === 'POST' && req.url === '/webhook') {
+  if(req.method === 'POST') {
     let chunks = [];
 
     req.on('data', (chunk) => {
       chunks.push(chunk);
     });
+
     req.on('end', () => {
       const jsonBuffer = Buffer.concat(chunks);
       const jsonObjStr = jsonBuffer.toString();
@@ -24,7 +25,8 @@ export default function handler(req, res) {
       res.writeHead(200, 'Converted Successfully', {"content-type":"application/json"});
       res.end(response);
     });
+
   } else {
-    res.end('Not Found');
+    res.end('That Api METHOD Was Not Found: ' + req.method);
   }
 }

@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function Home() {
+
+  const [response, setRespose] = useState()
+  const [isLoading, setIsLoading] = useState()
 
   const [formData, setFormData] = useState({
     url: undefined,
     email: undefined
   });
-
-  const [response, setRespose] = useState()
-  const [isLoading, setIsLoading] = useState()
-
-  useEffect(() => console.log(response), [response])
 
   const onChange = (value, key) => {
     if(value && value !== '') {
@@ -49,7 +47,7 @@ export default function Home() {
   return (
     <header>
       <div className="preview">
-          <h3>Test Words To Alphabetically Orderd Characters</h3>
+          <h3>Test Api Endpoint</h3>
           <p>{isLoading && 'Loading...'}{response?.success ? 'Response: ' + response?.data?.message : response ? 'Request Failed. Reaon: ' + response?.message : 'Provide Required Details to Test Your Endpoint'}</p>
           {
             response?.data ? 
@@ -65,7 +63,7 @@ export default function Home() {
         <div className="inputs">
           <div className={`input ${formData.url ? 'filled' : ''}`}>
             <label htmlFor="">url to test</label>
-              <input type="text" name='url' onChange={(e) => onChange(e.target.value, 'url')} />
+              <input type="url" name='url' onChange={(e) => onChange(e.target.value, 'url')} />
           </div>
           <div className={`input ${formData.email ? 'filled' : ''}`}>
             <label htmlFor="email">email</label>
