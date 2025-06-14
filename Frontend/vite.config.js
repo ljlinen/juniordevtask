@@ -4,6 +4,7 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/juniordevtask/",
   plugins: [react(), svgr({
     // svgr options: https://react-svgr.com/docs/options/
     svgrOptions: { exportType: "default", ref: true, svgo: false, titleProp: true },
